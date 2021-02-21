@@ -1,0 +1,26 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  p1
+  Sample SAM Template for p1
+  
+Globals:
+  Function:
+    Timeout: 300
+
+Resources:
+  hw2p1Function:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: hw2p1Function
+      CodeUri: hello-world/
+      Handler: app.handler
+      Runtime: nodejs12.x
+
+Outputs:
+  hw2p1Function:
+    Description: "hw2p1Function Lambda Function ARN"
+    Value: !GetAtt hw2p1Function.Arn
+  hw2p1FunctionnIamRole:
+    Description: "Implicit IAM Role created for hw2p1Function function"
+    Value: !GetAtt hw2p1FunctionRole.Arn
