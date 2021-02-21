@@ -39,7 +39,7 @@ Resources:
           Action: sns:Publish
           Resource: !Ref hw2p3snstopic
       Topics:
-      - !Ref hw2p3snstopic
+        - !Ref hw2p3snstopic
 
 Outputs:
   hw2p3Function:
