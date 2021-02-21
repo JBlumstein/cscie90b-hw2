@@ -1,0 +1,51 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  p3
+  Sample SAM Template for p3
+
+Globals:
+  Function:
+    Timeout: 300
+
+Resources:
+  hw2p3Function:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: hw2p3Function
+      CodeUri: hello_world/
+      Handler: app.lambda_handler
+      Runtime: python3.7
+  hw2p3snstopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: hw2p3snstopic
+  hw2p3snstopicpolicy:
+    Type: AWS::SNS::TopicPolicy
+    Properties:
+      PolicyDocument:
+        Id:
+          Ref: hw2p3snstopic
+        Statement:
+          Effect: Allow
+          Principal:
+            AWS: "806930896523"
+          Action: sns:Publish
+          Resource: !Ref hw2p3snstopic
+      Topics:
+      - !Ref hw2p3snstopic
+  hw2p3snstopicsubscription:
+    Type: AWS::SNS::Subscription
+    Properties:
+      Protocol: lambda
+      Endpoint: !GetAtt hw2p3Function.Arn
+      TopicArn: !Ref hw2p3snstopic
+
+
+Outputs:
+  hw2p3Function:
+    Description: "hw2p3Function Lambda Function ARN"
+    Value: !GetAtt hw2p3Function.Arn
+  hw2p3FunctionIamRole:
+    Description: "Implicit IAM Role created for hw2p3Function function"
+    Value: !GetAtt hw2p3FunctionRole.Arn
