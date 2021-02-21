@@ -29,7 +29,7 @@ Resources:
         Statement:
           Effect: Allow
           Principal:
-            AWS: "806930896523"
+            AWS: "*"
           Action: sns:Publish
           Resource: !Ref hw2p3snstopic
       Topics:
