@@ -9,6 +9,7 @@ Globals:
     Timeout: 300
 
 Resources:
+
   hw2p3Function:
     Type: AWS::Serverless::Function
     Properties:
@@ -16,28 +17,41 @@ Resources:
       CodeUri: hello_world/
       Handler: app.lambda_handler
       Runtime: python3.7
+      Policies:
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Resource: '*'
+              Action:
+                - 'lambda:InvokeFunction'
+
+  hw2p3FunctionInvokePermission:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName: !Ref hw2p3Function
+      Principal: sns.amazonaws.com
+
   hw2p3snstopic:
     Type: AWS::SNS::Topic
     Properties:
       TopicName: hw2p3snstopic
-      Subscription: [
-        {
-          Protocol: lambda,
+      Subscription: 
+        - Protocol: lambda
           Endpoint: !GetAtt hw2p3Function.Arn
-        }
-      ]
+      
   hw2p3snstopicpolicy:
     Type: AWS::SNS::TopicPolicy
     Properties:
       PolicyDocument:
-        Id:
-          Ref: hw2p3snstopic
+        Id: !Ref hw2p3snstopic
+        Version: '2012-10-17'
         Statement:
-          Effect: Allow
-          Principal:
-            AWS: "*"
-          Action: sns:Publish
-          Resource: !Ref hw2p3snstopic
+          - Effect: Allow
+            Principal:
+              AWS: "*"
+            Action: sns:Publish
+            Resource: !Ref hw2p3snstopic
       Topics:
         - !Ref hw2p3snstopic
 
