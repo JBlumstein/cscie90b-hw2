@@ -1,4 +1,4 @@
-# cscie90b-hw1
+# cscie90b-hw2
 Repo for Harvard Extension School CSCI E90B Homework 2
 
 ## Explanation of work
