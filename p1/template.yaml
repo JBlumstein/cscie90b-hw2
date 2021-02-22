@@ -13,7 +13,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: hw2p1Function
-      CodeUri: hello-world/
+      CodeUri: hello_world/
       Handler: app.handler
       Runtime: nodejs12.x
 
